@@ -6,6 +6,7 @@
             }
 
             $this->postModel = $this->model('Post');
+            $this->userModel = $this->model('User');
         }
 
         public function index() {
@@ -67,7 +68,13 @@
         }
 
         public function show($id) {
-            $data = [];
+            $post = $this->postModel->getPostById($id);
+            $user = $this->userModel->getUserById($post->userid);
+
+            $data = [
+                'post' => $post,
+                'user' => $user
+            ];
 
             $this->view('posts/show', $data);
 
